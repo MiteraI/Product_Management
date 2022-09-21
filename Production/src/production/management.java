@@ -8,8 +8,7 @@ package production;
  *
  * @author Huynh Anh Kiet
  */
-public class management {
-
+public class Management {
     /**
      * @param args the command line arguments
      */
