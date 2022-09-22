@@ -6,12 +6,10 @@ package production;
 
 /**
  *
- * @author Huynh Anh Kiet
+ * @author multiple
  */
 public class Management {
-    /**
-     * @param args the command line arguments
-     */
+  
     public static void main(String[] args) {
         // TODO code application logic here
     }
