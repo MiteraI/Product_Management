@@ -6,7 +6,6 @@ package tools;
 
 import java.util.Scanner;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.List;
 import java.util.ArrayList;
@@ -31,39 +30,7 @@ public class MyTools
     public static final Scanner sc = new Scanner(System.in);
     public static final Console console = System.console();
     
-    public static boolean validPassword(String password, int minLen)
-    {
-        if (password.length() < minLen)
-            return false;
-        if (!password.matches(".*[a-zA-Z]+.*"))
-            return false;
-        if (!password.matches(".*[\\d]+.*"))
-            return false;
-        return password.matches(".*[\\W]+.*");
-    }
     
-    public static Date parseDate(String dateStr, String dateFormat)
-    {
-        SimpleDateFormat sdf = (SimpleDateFormat)SimpleDateFormat.getInstance();
-        sdf.applyPattern(dateFormat);
-        try
-        {
-            long t = sdf.parse(dateStr).getTime();
-            return new Date(t);
-        }
-        catch (ParseException e)
-        {
-            System.out.println(e);
-        }
-        return null;
-    }
-    
-    public static String dateToStr(Date date, String dateFormat)
-    {
-        SimpleDateFormat sdf = (SimpleDateFormat)SimpleDateFormat.getInstance();
-        sdf.applyPattern(dateFormat);
-        return sdf.format(date);
-    }
     
     public static boolean parseBool(String boolStr)
     {
@@ -71,6 +38,15 @@ public class MyTools
         return (c == 'T' || c == 'Y' || c == '1');
     }
     
+    public static double parseDouble(String doubleStr) throws ParseException {
+        String s = doubleStr.trim();
+        return Double.parseDouble(s);
+    }
+    public static int parseInt(String intStr) throws ParseException {
+        String s = intStr.trim();
+        return Integer.parseInt(s);
+    }
+
     public static String hashWithSHA256(String str)
     {
         try
@@ -112,12 +88,6 @@ public class MyTools
         return input;
     }
     
-    public static String readPassword(String message)
-    {
-        System.out.print(message);
-        char[] password = console.readPassword();
-        return String.copyValueOf(password);
-    }
     
     public static boolean readBool(String message)
     {
@@ -157,7 +127,44 @@ public class MyTools
             return null;
         }
     }
-    
+    public static int readRangeInt(String message, int min, int max) {
+        int input = 0;
+        do {
+            System.out.print(message + ": ");
+            Scanner SC = new Scanner(System.in);
+            input = SC.nextInt();
+            if(input <= min || input >= max){
+                System.out.println("Invalid input! Please, try again.");
+            }
+        } while (input <= min || input >= max);
+        return input;
+    }
+    public static double readRangeDouble(String message, double min, double max) {
+        double input = 0;
+        do {
+            System.out.print(message + ": ");
+            Scanner SC = new Scanner(System.in);
+            input = SC.nextDouble();
+            if(input <= min || input >= max){
+                System.out.println("Invalid input! Please, try again.");
+            }
+        } while (input <= min || input >= max);
+        return input;
+    }
+    public static String readStatus(String message) {
+        String input;
+        boolean valid;
+        do {
+            System.out.print(message + ": ");
+            Scanner SC = new Scanner(System.in);
+            input = SC.nextLine().trim();
+            valid = (input.equalsIgnoreCase("available") || input.equalsIgnoreCase("not available"));
+            if(!valid){
+                System.out.println("Invalid input! Please, try again.");
+            }
+        } while (!valid);
+        return input;
+    }
     public static void writeToFile(String filename, List list)
     {
         try
