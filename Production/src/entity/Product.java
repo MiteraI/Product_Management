@@ -4,44 +4,34 @@
  * and open the template in the editor.
  */
 package entity;
-import tools.MyTool;
-import java.text.ParseException;
+
 /**
  *
  * @author Administrator
  */
-abstract class Product implements Comparable<Product> {
-    public static final String PRODUCT_FORMAT = "[a-zA-Z0-9\" \"]{5,100}";
-    public static final String ID_FORMAT = "P\\d{3}";
+public abstract class Product implements Comparable<Product> {
+    public static final String NAME_FORMAT = "[a-zA-Z0-9\" \"]{5,100}";
+    public static final char SEPARATOR = ',';
     String productID;
     String name;
     double price;
     int quantity;
-    String status;
-    public static final char SEPARATOR = ',';
+    boolean status;
 
     public Product() {
         this.productID = "";
         this.name = "";
         this.price = 0.0;
         this.quantity = 0;
-        this.status = "";
+        this.status = false;
     }
 
-    public Product(String productID, String name, double price, int quantity, String status) {
+    public Product(String productID, String name, double price, int quantity, boolean status) {
         this.productID = productID;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.status = status;
-    }
-    public Product(String line) throws ParseException{
-        String[] parts = line.split(""+SEPARATOR);
-        productID = parts[0].trim();
-        name = parts[1].trim();
-        price = MyTool.parseDouble(parts[2]);
-        quantity = MyTool.parseInt(parts[3]);
-        status = parts[4].trim();     
     }
 
     public String getProductID() {
@@ -76,13 +66,14 @@ abstract class Product implements Comparable<Product> {
         this.quantity = quantity;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
+
     @Override
     public String toString(){
         return productID + SEPARATOR + name + SEPARATOR + price + SEPARATOR + quantity + SEPARATOR + status;
