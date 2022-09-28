@@ -5,7 +5,8 @@
  */
 package mng;
 import java.util.ArrayList;
-import java.util.Scanner;
+
+import tools.MyTool;
 /**
  *
  * @author Administrator
@@ -25,11 +26,9 @@ public class Menu extends ArrayList<String>{
     public int getChoice(String title) {
         System.out.println(title);
         for (int i = 0; i < this.size(); i++) {
-            System.out.println("    "+(i + 1) + " - " + this.get(i));
+            System.out.println("    " +(i + 1) + " - " + this.get(i));
         }
         System.out.println("Press other to quit.");
-        System.out.print("Choose [1.." + this.size() + "]: ");
-        Scanner sc = new Scanner(System.in);
-        return Integer.parseInt(sc.nextLine());
+        return MyTool.readRangeInt("Choose [1.." + this.size() + "]: ", 1, this.size());
     }
 }

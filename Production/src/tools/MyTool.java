@@ -38,52 +38,56 @@ public class MyTool {
     }
     public static int readRangeInt(String message, int min, int max) {
         int input = 0;
+        Scanner SC = new Scanner(System.in);
         do {
             System.out.print(message + ": ");
-            Scanner SC = new Scanner(System.in);
             input = SC.nextInt();
             if(input <= min || input >= max){
                 System.out.println("Invalid input! Please, try again.");
             }
         } while (input <= min || input >= max);
+        SC.close();
         return input;
     }
     public static double readRangeDouble(String message, double min, double max) {
         double input = 0;
+        Scanner SC = new Scanner(System.in);
         do {
             System.out.print(message + ": ");
-            Scanner SC = new Scanner(System.in);
             input = SC.nextDouble();
             if(input <= min || input >= max){
                 System.out.println("Invalid input! Please, try again.");
             }
         } while (input <= min || input >= max);
+        SC.close();
         return input;
     }
     public static String readNonBlank(String message) {
         String input = "";
+        Scanner SC = new Scanner(System.in);
         do {
-            System.out.print(message + ": ");
-            Scanner SC = new Scanner(System.in);
+            System.out.print(message);
             input = SC.nextLine().trim();
             if(input.isEmpty()){
                 System.out.println("Invalid input! Please, try again.");
             }
         } while (input.isEmpty());
+        SC.close();
         return input;
     }
     public static String readPattern(String message, String pattern) {
         String input = "";
         boolean valid;
+        Scanner SC = new Scanner(System.in);
         do {
-            System.out.print(message + ": ");
-            Scanner SC = new Scanner(System.in);
+            System.out.print(message);
             input = SC.nextLine().trim();
             valid = validStr(input, pattern);
             if(!valid){
                 System.out.println("Invalid input! Please, try again.");
             }
         } while (!valid);
+        SC.close();
         return input;
     } 
     public static boolean readBool(String message) {
@@ -91,14 +95,11 @@ public class MyTool {
         System.out.print(message + "[1/0-Y/N-T/F]: ");
         Scanner SC = new Scanner(System.in);
         input = SC.nextLine().trim();
-        if (input.isEmpty()) {
-            return false;
-        }
-        char c = Character.toUpperCase(input.charAt(0));
-        return (c == '1' || c == 'Y' || c == 'T');
+        SC.close();
+        return MyTool.parseBool(input);
     }
     public static List<String> readLinesFromFile(String filename) {
-        ArrayList<String> list = new ArrayList();
+        ArrayList<String> list = new ArrayList<String>();
         File f = new File(filename);
         if (f.exists()) {
             String line;
@@ -119,7 +120,7 @@ public class MyTool {
         }
         return list;
     }
-    public static void writeFile(String filename, List list) {
+    public static void writeFile(String filename, List<Object> list) {
         if (list != null && !list.isEmpty()) {
             try {
                 FileWriter fw = new FileWriter(filename);
@@ -137,15 +138,16 @@ public class MyTool {
     public static String readStatus(String message) {
         String input;
         boolean valid;
+        Scanner SC = new Scanner(System.in);
         do {
             System.out.print(message + ": ");
-            Scanner SC = new Scanner(System.in);
             input = SC.nextLine().trim();
             valid = (input.equalsIgnoreCase("available") || input.equalsIgnoreCase("not available"));
             if(!valid){
                 System.out.println("Invalid input! Please, try again.");
             }
         } while (!valid);
+        SC.close();
         return input;
     }
 }
