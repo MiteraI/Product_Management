@@ -29,6 +29,6 @@ public class Menu extends ArrayList<String>{
             System.out.println("    " +(i + 1) + " - " + this.get(i));
         }
         System.out.println("Press other to quit.");
-        return MyTool.readRangeInt("Choose [1.." + this.size() + "]: ", 1, this.size());
+        return Integer.parseInt(MyTool.readNonBlank("Choose [1.." + this.size() + "]: "));
     }
 }
