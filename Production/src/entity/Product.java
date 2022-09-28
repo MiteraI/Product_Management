@@ -10,7 +10,7 @@ import java.text.ParseException;
  *
  * @author Administrator
  */
-public class Product implements Comparable<Product> {
+abstract class Product implements Comparable<Product> {
     public static final String PRODUCT_FORMAT = "[a-zA-Z0-9\" \"]{5,100}";
     public static final String ID_FORMAT = "P\\d{3}";
     String productID;
@@ -36,7 +36,7 @@ public class Product implements Comparable<Product> {
         this.status = status;
     }
     public Product(String line) throws ParseException{
-        String[] parts = line.split(""+this.SEPARATOR);
+        String[] parts = line.split(""+SEPARATOR);
         productID = parts[0].trim();
         name = parts[1].trim();
         price = MyTool.parseDouble(parts[2]);
