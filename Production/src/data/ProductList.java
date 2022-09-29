@@ -17,7 +17,11 @@ import tools.MyTool;
  */
 public class ProductList extends ArrayList<Product> {
     private String datafile="";
-    boolean changed = false;
+    private final String productHrBreak = String.format(Product.FORMAT_STRING, "", "", "", "", "").replace("|", "+").replace(" ", "-");
+    private final String laptopHrBreak = String.format(Laptop.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
+    private final String phoneHrBreak = String.format(Phone.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
+    private final String wsHrBreak = String.format(WorkStation.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
+    private boolean changed = false;
 
     public ProductList() {}
 
@@ -92,13 +96,12 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("Empty list!");
             return;
         }
-        String hrBreak = String.format(Product.FORMAT_STRING, "", "", "", "", "").replace("|", "+").replace(" ", "-");
-        System.out.println(hrBreak);
+        System.out.println(productHrBreak);
         System.out.printf(Product.FORMAT_STRING, "ID", "Name", "Price", "Quantity", "Status");
-        System.out.println(hrBreak);
+        System.out.println(productHrBreak);
         for (Product p : list)
             System.out.println(p.toFormatString());
-        System.out.println(hrBreak);
+        System.out.println(productHrBreak);
     }
 
     private void printLaptopList(ArrayList<Laptop> list)
@@ -108,13 +111,13 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("Empty list!");
             return;
         }
-        String hrBreak = String.format(Laptop.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
-        System.out.println(hrBreak);
+        
+        System.out.println(laptopHrBreak);
         System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
-        System.out.println(hrBreak);
+        System.out.println(laptopHrBreak);
         for (Product p : list)
             System.out.println(p.toFormatString());
-        System.out.println(hrBreak);
+        System.out.println(laptopHrBreak);
     }
 
     private void printPhoneList(ArrayList<Phone> list)
@@ -124,13 +127,29 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("Empty list!");
             return;
         }
-        String hrBreak = String.format(Phone.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
-        System.out.println(hrBreak);
+        
+        System.out.println(phoneHrBreak);
         System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "OS", "Storage", "RAM", "Price", "Quantity", "Status");
-        System.out.println(hrBreak);
+        System.out.println(phoneHrBreak);
         for (Product p : list)
             System.out.println(p.toFormatString());
-        System.out.println(hrBreak);
+        System.out.println(phoneHrBreak);
+    }
+
+    private void printWorkStationList(ArrayList<WorkStation> list)
+    {
+        if (list.isEmpty())
+        {
+            System.out.println("Empty list!");
+            return;
+        }
+        
+        System.out.println(wsHrBreak);
+        System.out.printf(WorkStation.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
+        System.out.println(wsHrBreak);
+        for (Product p : list)
+            System.out.println(p.toFormatString());
+        System.out.println(wsHrBreak);
     }
 
     public void checkExistProduct()
@@ -157,22 +176,34 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("Product(s) found!");
     }
 
-    public void searchProduct() {
-        String find = MyTool.readPattern("Enter product name", Product.PRODUCT_FORMAT);
-        if(!searchProduct(find)){
-            System.out.println("Not Found!");
-        }
-        else{
-            System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-            System.out.format("|%-5s|%-30s|%-15s|%-10s|%-14s|\n","ID","Name","Price","Quantity","Status");
-            System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-            for (Product p : this) {
-                if (p.getName().toLowerCase().contains(find.toLowerCase())) {
-                    System.out.format("|%-5s|%-30s|%-15.2f|%-10d|%-14s|\n",p.productID,p.name,p.price,p.quantity,p.status);
-                    System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-                }
+    public void searchProduct()
+    {
+        int attr = MyTool.readRangeInt("Search by: [1] ID; [2] Name", 1, 2);
+        ArrayList<Product> list = new ArrayList<>();
+        switch (attr)
+        {
+            case 1 ->
+            {
+                String productID = MyTool.readNonBlank("Enter product ID: ");
+                list = searchByID(productID);
             }
-            
+            case 2 ->
+            {
+                String name = MyTool.readNonBlank("Enter product name: ");
+                list = searchByName(name);
+            }
+        }
+        if (list.isEmpty())
+        {
+            System.out.println("No products found!");
+        }
+        else if (list.size() == 1)
+        {
+            Product p = list.get(0);
+            if (p instanceof Laptop)
+            {
+
+            }
         }
     }
     
