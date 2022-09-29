@@ -123,7 +123,7 @@ public class MyTool {
         }
         return list;
     }
-    public static void writeFile(String filename, List<Object> list) {
+    public static void writeFile(String filename, List list) {
         if (list != null && !list.isEmpty()) {
             try {
                 FileWriter fw = new FileWriter(filename);

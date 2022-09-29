@@ -6,55 +6,53 @@
 package data;
 
 import entity.*;
-import java.text.ParseException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import tools.MyTool;
+
 /**
  *
  * @author Administrator
  */
 public class ProductList extends ArrayList<Product> {
-    private String datafile="";
-    private final String productHrBreak = String.format(Product.FORMAT_STRING, "", "", "", "", "").replace("|", "+").replace(" ", "-");
-    private final String laptopHrBreak = String.format(Laptop.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
-    private final String phoneHrBreak = String.format(Phone.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
-    private final String wsHrBreak = String.format(WorkStation.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
+    private String datafile = "";
+    private final String productHrBreak = String.format(Product.FORMAT_STRING, "", "", "", "", "")
+            .replace("|", "+").replace(" ", "-");
+    private final String laptopHrBreak = String.format(Laptop.FORMAT_STRING, "", "", "", "", "", "", "", "")
+            .replace("|", "+").replace(" ", "-");
+    private final String phoneHrBreak = String.format(Phone.FORMAT_STRING, "", "", "", "", "", "", "", "")
+            .replace("|", "+").replace(" ", "-");
+    private final String wsHrBreak = String.format(WorkStation.FORMAT_STRING, "", "", "", "", "", "", "", "")
+            .replace("|", "+").replace(" ", "-");
     private final String regexBlank = "^$";
     private final String regexDecimal = "\\d{0,4}\\.\\d+";
     private final String regexInteger = "\\d{1,3}";
     private boolean changed = false;
 
-    public ProductList() {}
+    public ProductList() {
+    }
 
-    private void loadProductFromFile()
-    {
+    private void loadProductFromFile() {
         List<String> list = MyTool.readLinesFromFile(datafile);
-        for(String str: list)
-        {
+        for (String str : list) {
             String[] parts = str.split("" + Product.SEPARATOR);
             String productID = parts[0];
             String name = parts[1];
             double price = Double.parseDouble(parts[2]);
             int quantity = Integer.parseInt(parts[3]);
             boolean status = MyTool.parseBool(parts[4]);
-            if (productID.matches(Laptop.ID_FORMAT))
-            {
+            if (productID.matches(Laptop.ID_FORMAT)) {
                 String cpu = parts[5];
                 String gpu = parts[6];
                 int ramSize = Integer.parseInt(parts[7]);
                 this.add(new Laptop(productID, name, price, quantity, status, cpu, gpu, ramSize));
-            }
-            else if (productID.matches(Phone.ID_FORMAT))
-            {
+            } else if (productID.matches(Phone.ID_FORMAT)) {
                 String os = parts[5];
                 int storage = Integer.parseInt(parts[6]);
                 int ramSize = Integer.parseInt(parts[7]);
                 this.add(new Phone(productID, name, price, quantity, status, os, storage, ramSize));
-            }
-            else if (productID.matches(WorkStation.ID_FORMAT))
-            {
+            } else if (productID.matches(WorkStation.ID_FORMAT)) {
                 String cpu = parts[5];
                 String gpu = parts[6];
                 int ramSize = Integer.parseInt(parts[7]);
@@ -63,37 +61,31 @@ public class ProductList extends ArrayList<Product> {
         }
     }
 
-    public void initWithFile()
-    {
+    public void initWithFile() {
         Config cR = new Config();
         datafile = cR.getProductFile();
-        loadProductFromFile();   
+        loadProductFromFile();
     }
 
-    private ArrayList<Product> searchByID(String productID)
-    {
+    private ArrayList<Product> searchByID(String productID) {
         ArrayList<Product> list = new ArrayList<>();
-        for (Product p : this)
-        {
+        for (Product p : this) {
             if (p.getProductID().toUpperCase().contains(productID.toUpperCase()))
                 list.add(p);
         }
         return list;
     }
 
-    private ArrayList<Product> searchByName(String name)
-    {
+    private ArrayList<Product> searchByName(String name) {
         ArrayList<Product> list = new ArrayList<>();
-        for (Product p : this)
-        {
+        for (Product p : this) {
             if (p.getName().toUpperCase().contains(name.toUpperCase()))
                 list.add(p);
         }
         return list;
     }
 
-    private void printProduct(Product p)
-    {
+    private void printProduct(Product p) {
         System.out.println(productHrBreak);
         System.out.printf(Product.FORMAT_STRING, "ID", "Name", "Price", "Quantity", "Status");
         System.out.println(productHrBreak);
@@ -101,10 +93,8 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(productHrBreak);
     }
 
-    private void printProductList(ArrayList<Product> list)
-    {
-        if (list.isEmpty())
-        {
+    private void printProductList(ArrayList<Product> list) {
+        if (list.isEmpty()) {
             System.out.println("Empty list!");
             return;
         }
@@ -116,8 +106,7 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(productHrBreak);
     }
 
-    private void printLaptop(Laptop laptop)
-    {
+    private void printLaptop(Laptop laptop) {
         System.out.println(laptopHrBreak);
         System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
         System.out.println(laptopHrBreak);
@@ -125,14 +114,12 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(laptopHrBreak);
     }
 
-    private void printLaptopList(ArrayList<Laptop> list)
-    {
-        if (list.isEmpty())
-        {
+    private void printLaptopList(ArrayList<Laptop> list) {
+        if (list.isEmpty()) {
             System.out.println("Empty list!");
             return;
         }
-        
+
         System.out.println(laptopHrBreak);
         System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
         System.out.println(laptopHrBreak);
@@ -141,8 +128,7 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(laptopHrBreak);
     }
 
-    private void printPhone(Phone phone)
-    {
+    private void printPhone(Phone phone) {
         System.out.println(phoneHrBreak);
         System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "OS", "Storage", "RAM", "Price", "Quantity", "Status");
         System.out.println(phoneHrBreak);
@@ -150,14 +136,12 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(phoneHrBreak);
     }
 
-    private void printPhoneList(ArrayList<Phone> list)
-    {
-        if (list.isEmpty())
-        {
+    private void printPhoneList(ArrayList<Phone> list) {
+        if (list.isEmpty()) {
             System.out.println("Empty list!");
             return;
         }
-        
+
         System.out.println(phoneHrBreak);
         System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "OS", "Storage", "RAM", "Price", "Quantity", "Status");
         System.out.println(phoneHrBreak);
@@ -166,8 +150,7 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(phoneHrBreak);
     }
 
-    private void printWorkStation(WorkStation ws)
-    {
+    private void printWorkStation(WorkStation ws) {
         System.out.println(wsHrBreak);
         System.out.printf(WorkStation.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
         System.out.println(wsHrBreak);
@@ -175,14 +158,12 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(wsHrBreak);
     }
 
-    private void printWorkStationList(ArrayList<WorkStation> list)
-    {
-        if (list.isEmpty())
-        {
+    private void printWorkStationList(ArrayList<WorkStation> list) {
+        if (list.isEmpty()) {
             System.out.println("Empty list!");
             return;
         }
-        
+
         System.out.println(wsHrBreak);
         System.out.printf(WorkStation.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
         System.out.println(wsHrBreak);
@@ -191,20 +172,16 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(wsHrBreak);
     }
 
-    public void checkExistProduct()
-    {
-        //loadProductFromFile();
+    public void checkExistProduct() {
+        // loadProductFromFile();
         int attr = MyTool.readRangeInt("Search by: [1] ID; [2] Name", 1, 2);
         ArrayList<Product> list = new ArrayList<>();
-        switch (attr)
-        {
-            case 1 ->
-            {
+        switch (attr) {
+            case 1 -> {
                 String productID = MyTool.readNonBlank("Enter product ID: ");
                 list = searchByID(productID);
             }
-            case 2 ->
-            {
+            case 2 -> {
                 String name = MyTool.readNonBlank("Enter product name: ");
                 list = searchByName(name);
             }
@@ -215,29 +192,22 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("Product(s) found!");
     }
 
-    public void searchProduct()
-    {
+    public void searchProduct() {
         int attr = MyTool.readRangeInt("Search by: [1] ID; [2] Name", 1, 2);
         ArrayList<Product> list = new ArrayList<>();
-        switch (attr)
-        {
-            case 1 ->
-            {
+        switch (attr) {
+            case 1 -> {
                 String productID = MyTool.readNonBlank("Enter product ID: ");
                 list = searchByID(productID);
             }
-            case 2 ->
-            {
+            case 2 -> {
                 String name = MyTool.readNonBlank("Enter product name: ");
                 list = searchByName(name);
             }
         }
-        if (list.isEmpty())
-        {
+        if (list.isEmpty()) {
             System.out.println("No products found!");
-        }
-        else if (list.size() == 1)
-        {
+        } else if (list.size() == 1) {
             Product p = list.get(0);
             if (p instanceof Laptop laptop)
                 printLaptop(laptop);
@@ -247,18 +217,14 @@ public class ProductList extends ArrayList<Product> {
                 printWorkStation(ws);
             else
                 printProduct(p);
-        }
-        else
-        {
+        } else {
             printProductList(list);
         }
     }
 
-    public void addProduct()
-    {
+    public void addProduct() {
         int choice = MyTool.readRangeInt("Add: [1] Laptop; [2] Phone; [3] WorkStation; [4] Misc", 1, 4);
-        switch (choice)
-        {
+        switch (choice) {
             case 1 -> printLaptop(addLaptop());
             case 2 -> printPhone(addPhone());
             case 3 -> printWorkStation(addWorkStation());
@@ -268,11 +234,9 @@ public class ProductList extends ArrayList<Product> {
         changed = true;
     }
 
-    private Laptop addLaptop()
-    {
+    private Laptop addLaptop() {
         String productID = MyTool.readPattern("New laptop's ID: ", Laptop.ID_FORMAT);
-        while (!searchByID(productID).isEmpty())
-        {
+        while (!searchByID(productID).isEmpty()) {
             System.out.println("ID is duplicated!");
             productID = MyTool.readPattern("New laptop's ID: ", Laptop.ID_FORMAT);
         }
@@ -286,47 +250,70 @@ public class ProductList extends ArrayList<Product> {
         return new Laptop(productID, name, price, quantity, status, cpu, gpu, ramSize);
     }
 
-    private Phone addPhone()
-    {
-
+    private Phone addPhone() {
+        String productID = MyTool.readPattern("New phone's ID: ", Phone.ID_FORMAT);
+        while (!searchByID(productID).isEmpty()) {
+            System.out.println("ID is duplicated!");
+            productID = MyTool.readPattern("New phone's ID: ", Phone.ID_FORMAT);
+        }
+        String name = MyTool.readPattern("New phone's name: ", Phone.NAME_FORMAT);
+        String os = MyTool.readNonBlank("New phone's OS: ");
+        int storage = MyTool.readRangeInt("New phone's storage: ", 0, 2048);
+        int ramSize = MyTool.readRangeInt("New phone's RAM size: ", 0, 8);
+        double price = MyTool.readRangeDouble("New phone's price: ", 0, 10000);
+        int quantity = MyTool.readRangeInt("New phone's quantity: ", 0, 1000);
+        boolean status = MyTool.readBool("Is the phone available?");
+        return new Phone(productID, name, price, quantity, status, os, storage, ramSize);
     }
 
-    private WorkStation addWorkStation()
-    {
-
+    private WorkStation addWorkStation() {
+        String productID = MyTool.readPattern("New workstation's ID: ", WorkStation.ID_FORMAT);
+        while (!searchByID(productID).isEmpty()) {
+            System.out.println("ID is duplicated!");
+            productID = MyTool.readPattern("New workstation's ID: ", WorkStation.ID_FORMAT);
+        }
+        String name = MyTool.readPattern("New workstation's name: ", WorkStation.NAME_FORMAT);
+        String cpu = MyTool.readNonBlank("New workstation's CPU: ");
+        String gpu = MyTool.readNonBlank("New workstation's GPU: ");
+        int ramSize = MyTool.readRangeInt("New workstation's RAM size: ", 0, 16384);
+        double price = MyTool.readRangeDouble("New workstation's price: ", 0, 10000);
+        int quantity = MyTool.readRangeInt("New workstation's quantity: ", 0, 1000);
+        boolean status = MyTool.readBool("Is the workstation available?");
+        return new WorkStation(productID, name, price, quantity, status, cpu, gpu, ramSize);
     }
 
-    private Product addMisc()
-    {
-
+    private Product addMisc() {
+        String productID = MyTool.readPattern("New product's ID: ", Product.ID_FORMAT);
+        while (!searchByID(productID).isEmpty()) {
+            System.out.println("ID is duplicated!");
+            productID = MyTool.readPattern("New product's ID: ", Product.ID_FORMAT);
+        }
+        String name = MyTool.readPattern("New product's name: ", Product.NAME_FORMAT);
+        double price = MyTool.readRangeDouble("New product's price: ", 0, 10000);
+        int quantity = MyTool.readRangeInt("New product's quantity: ", 0, 1000);
+        boolean status = MyTool.readBool("Is the product available?");
+        return new Product(productID, name, price, quantity, status);
     }
 
-    public void updateProduct(String productID)
-    {
+    public void updateProduct() {
+        String productID = MyTool.readPattern("ID of product to be updated: ",
+                Product.ID_FORMAT + "|" + Laptop.ID_FORMAT + "|" + Phone.ID_FORMAT + "|" + WorkStation.ID_FORMAT);
         ArrayList<Product> list = searchByID(productID);
-        if (list.isEmpty())
-        {
+        if (list.isEmpty()) {
             System.out.println("No products found!");
             return;
         }
         Product p = list.get(0);
-        if (p instanceof Laptop laptop)
-        {
+        if (p instanceof Laptop laptop) {
             updateLaptop(laptop);
             printLaptop(laptop);
-        }
-        else if (p instanceof Phone phone)
-        {
+        } else if (p instanceof Phone phone) {
             updatePhone(phone);
             printPhone(phone);
-        }
-        else if (p instanceof WorkStation ws)
-        {
+        } else if (p instanceof WorkStation ws) {
             updateWorkStation(ws);
             printWorkStation(ws);
-        }
-        else
-        {
+        } else {
             updateProduct(p);
             printProduct(p);
         }
@@ -334,14 +321,13 @@ public class ProductList extends ArrayList<Product> {
         changed = true;
     }
 
-    private void updateLaptop(Laptop laptop)
-    {
+    private void updateLaptop(Laptop laptop) {
         updateProduct(laptop);
 
         String tmp = MyTool.readPattern("New CPU (leave blank to skip): ", ".*");
         if (!tmp.isBlank())
             laptop.setCpu(tmp);
-        
+
         tmp = MyTool.readPattern("New GPU (leave blank to skip): ", ".*");
         if (!tmp.isBlank())
             laptop.setGpu(tmp);
@@ -351,14 +337,13 @@ public class ProductList extends ArrayList<Product> {
             laptop.setRamSize(Integer.parseInt(tmp));
     }
 
-    private void updatePhone(Phone phone)
-    {
+    private void updatePhone(Phone phone) {
         updateProduct(phone);
 
         String tmp = MyTool.readPattern("New OS (leave blank to skip): ", ".*");
         if (!tmp.isBlank())
             phone.setOs(tmp);
-        
+
         tmp = MyTool.readPattern("New storage (leave blank to skip): ", regexBlank + "|" + regexInteger);
         if (!tmp.isBlank())
             phone.setStorage(Integer.parseInt(tmp));
@@ -368,14 +353,13 @@ public class ProductList extends ArrayList<Product> {
             phone.setRamSize(Integer.parseInt(tmp));
     }
 
-    private void updateWorkStation(WorkStation ws)
-    {
+    private void updateWorkStation(WorkStation ws) {
         updateProduct(ws);
 
         String tmp = MyTool.readPattern("New CPU (leave blank to skip): ", ".*");
         if (!tmp.isBlank())
             ws.setCpu(tmp);
-        
+
         tmp = MyTool.readPattern("New GPU (leave blank to skip): ", ".*");
         if (!tmp.isBlank())
             ws.setGpu(tmp);
@@ -385,111 +369,89 @@ public class ProductList extends ArrayList<Product> {
             ws.setRamSize(Integer.parseInt(tmp));
     }
 
-    private void updateProduct(Product p)
-    {
+    private void updateProduct(Product p) {
         String tmp = MyTool.readPattern("New name (leave blank to skip): ", regexBlank + "|" + Product.NAME_FORMAT);
         if (tmp.isBlank())
             p.setName(tmp);
 
-        tmp = MyTool.readPattern("New price (leave blank to skip): ", regexBlank + "|" + regexDecimal + "|" + regexInteger);
+        tmp = MyTool.readPattern("New price (leave blank to skip): ",
+                regexBlank + "|" + regexDecimal + "|" + regexInteger);
         if (!tmp.isBlank())
             p.setPrice(Double.parseDouble(tmp));
-        
+
         tmp = MyTool.readPattern("New quantity (leave blank to skip): ", regexBlank + "|" + regexInteger);
         if (!tmp.isBlank())
             p.setQuantity(Integer.parseInt(tmp));
-        
+
         tmp = MyTool.readPattern("New status (leave blank to skip): ", ".*");
         if (!tmp.isBlank())
             p.setStatus(MyTool.parseBool(tmp));
     }
 
-    /*public void addProduct()
-    {
-        String productID;
-        String name;
-        double price;
-        int quantity;
-        String status;
-        int pos;
-        do {
-            productID = MyTool.readPattern("New product ID", Product.ID_FORMAT);
-            productID = productID.toUpperCase();
-            pos = checkID(productID);
-            if (pos >= 0) {
-                System.out.println("Product ID is duplicated!");
-            }
-        } while (pos >= 0);
-        do {
-            name = MyTool.readPattern("Name of new product", Product.PRODUCT_FORMAT);
-            if (searchName(name)) {
-                System.out.println("Product name is duplicated!");
-            }
-        } while (searchName(name));
-        price = MyTool.readRangeDouble("Price of new product", 0, 10000);
-        quantity = MyTool.readRangeInt("Quantity of new product", 0, 1000);
-                
-        status = MyTool.readStatus("Status of new product");
-        Product p = new Product(productID, name, price, quantity, status);
-        this.add(p);
-        System.out.println("Product has been updated");
-        System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-        System.out.format("|%-5s|%-30s|%-15s|%-10s|%-14s|\n","ID","Name","Price","Quantity","Status");
-        System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-        System.out.format("|%-5s|%-30s|%-15.2f|%-10d|%-14s|\n",productID,name,price,quantity,status);
-        System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-        changed = true;
-    }*/
-
     public void deleteProduct() {
-        int pos;
-        do{
-            String productID = MyTool.readPattern("Enter ID of a product to delete",Product.ID_FORMAT).toUpperCase();
-            pos = checkID(productID);
-            if (pos < 0) {    
-                System.out.println("This product is not found!");
-            }
-        }while(pos<0);
-        this.remove(pos);
-        System.out.println("A product has been deleted!");
+        String productID = MyTool.readPattern("ID of product to be deleted: ",
+                Product.ID_FORMAT + "|" + Laptop.ID_FORMAT + "|" + Phone.ID_FORMAT + "|" + WorkStation.ID_FORMAT);
+        ArrayList<Product> list = searchByID(productID);
+        if (list.isEmpty()) {
+            System.out.println("No products found!");
+            return;
+        }
+        Product p =list.get(0);
+        this.remove(p);
+        System.out.println("The following product has been removed.");
+        if (p instanceof Laptop laptop)
+            printLaptop(laptop);
+        else if (p instanceof Phone phone)
+            printPhone(phone);
+        else if (p instanceof WorkStation ws)
+            printWorkStation(ws);
+        else
+            printProduct(p);
         changed = true;
-        
     }
 
-    public void updateProduct() {
-        String productID = MyTool.readPattern("Enter ID needs updating", Product.ID_FORMAT);
-        int pos = checkID(productID);
-        String name;
-        double price;
-        int quantity;
-        String status;
-        if (pos < 0) {
-            System.out.println("Not found!");
-        } else {
-            do {
-                name = MyTool.readPattern("Name of new product", Product.PRODUCT_FORMAT);
-                if (searchProduct(name)) {
-                    System.out.println("Product name is duplicated!");
-                }
-            } while (searchProduct(name));
-            price = MyTool.readRangeDouble("Price of new product", 0, 10000);
-            quantity = MyTool.readRangeInt("Quantity of new product", 0, 1000);
-            status = MyTool.readStatus("Status of new product").toUpperCase();
-            this.get(pos).setProductID(productID);
-            this.get(pos).setName(name);
-            this.get(pos).setPrice(price);
-            this.get(pos).setQuantity(quantity);
-            this.get(pos).setStatus(status);
-            System.out.println("Product has been updated");
-            System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-            System.out.format("|%-5s|%-30s|%-15s|%-10s|%-14s|\n","ID","Name","Price","Quantity","Status");
-            System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-            System.out.format("|%-5s|%-30s|%-15.2f|%-10d|%-14s|\n",productID,name,price,quantity,status);
-            System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-        }
-        changed = true;
+    public void printAllProducts()
+    {
+        Collections.sort(this);
+        printProductList(this);
     }
-    
+
+    public void printAllLaptops()
+    {
+        ArrayList<Laptop> list = new ArrayList<>();
+        for (Product p : this)
+        {
+            if (p instanceof Laptop laptop)
+                list.add(laptop);
+        }
+        Collections.sort(list);
+        printLaptopList(list);
+    }
+
+    public void printAllPhones()
+    {
+        ArrayList<Phone> list = new ArrayList<>();
+        for (Product p : this)
+        {
+            if (p instanceof Phone phone)
+                list.add(phone);
+        }
+        Collections.sort(list);
+        printPhoneList(list);
+    }
+
+    public void printAllWorkStations()
+    {
+        ArrayList<WorkStation> list = new ArrayList<>();
+        for (Product p : this)
+        {
+            if (p instanceof WorkStation ws)
+                list.add(ws);
+        }
+        Collections.sort(list);
+        printWorkStationList(list);
+    }
+
     public void writeProductToFile() {
         if (changed) {
             MyTool.writeFile(datafile, this);
@@ -504,43 +466,5 @@ public class ProductList extends ArrayList<Product> {
 
     public void setChanged(boolean changed) {
         this.changed = changed;
-    }
-    public void printAllProducts() {
-        if (this.isEmpty()) {
-            System.out.println("Empty list!");
-        } else {
-            Collections.sort(this);
-            System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-            System.out.format("|%-5s|%-30s|%-15s|%-10s|%-14s|\n","ID","Name","Price","Quantity","Status");
-            System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-            for (Product product : this) {
-                System.out.format("|%-5s|%-30s|%-15.2f|%-10d|%-14s|\n",product.productID,product.name,product.price,product.quantity,product.status);
-                System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-            }
-            
-        }
-    }
-
-    public void printAllProductInFile() throws ParseException {
-        List<String> lines = MyTool.readLinesFromFile(datafile);
-        ArrayList<Product> list = new ArrayList<>();
-        for (String s : lines) {
-            Product p = new Product(s);
-            list.add(p);
-        }
-        if(list.isEmpty()){
-            System.out.println("Empty list!");
-        }
-        else{
-            Collections.sort(list);
-            System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-            System.out.format("|%-5s|%-30s|%-15s|%-10s|%-14s|\n","ID","Name","Price","Quantity","Status");
-            System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-            for (Product product : list) {
-                System.out.format("|%-5s|%-30s|%-15.2f|%-10d|%-14s|\n",product.productID,product.name,product.price,product.quantity,product.status);
-                System.out.println("+-----+------------------------------+---------------+----------+--------------+");
-            }
-            
-        }
     }
 }
