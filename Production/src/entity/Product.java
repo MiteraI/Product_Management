@@ -9,22 +9,17 @@ package entity;
  *
  * @author Administrator
  */
-public abstract class Product implements Comparable<Product> {
+public class Product implements Comparable<Product> {
     public static final String NAME_FORMAT = "[a-zA-Z0-9\" \"]{5,100}";
+    public static final String FORMAT_STRING = "|%-5s|%-30s|%-15s|%-10s|%-14s|\n";
     public static final char SEPARATOR = ',';
-    String productID;
-    String name;
-    double price;
-    int quantity;
-    boolean status;
+    private String productID;
+    private String name;
+    private double price;
+    private int quantity;
+    private boolean status;
 
-    public Product() {
-        this.productID = "";
-        this.name = "";
-        this.price = 0.0;
-        this.quantity = 0;
-        this.status = false;
-    }
+    public Product() {}
 
     public Product(String productID, String name, double price, int quantity, boolean status) {
         this.productID = productID;
@@ -76,7 +71,16 @@ public abstract class Product implements Comparable<Product> {
 
     @Override
     public String toString(){
-        return productID + SEPARATOR + name + SEPARATOR + price + SEPARATOR + quantity + SEPARATOR + status;
+        return productID + 
+            SEPARATOR + name + 
+            SEPARATOR + price + 
+            SEPARATOR + quantity + 
+            SEPARATOR + status;
+    }
+
+    public String toFormatString()
+    {
+        return String.format(Product.FORMAT_STRING, productID, name, price, quantity, status ? "Available" : "Not available");
     }
 
     @Override
