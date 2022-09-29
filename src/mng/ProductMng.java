@@ -12,10 +12,6 @@ import tools.MyTool;
  * @author Administrator
  */
 public class ProductMng {
-    /**
-     * @param args
-     * @throws ParseException
-     */
     public static void main(String[] args) throws ParseException {
         String[] options = {"Print all product", "Create new product", "Check exist product", 
                             "Search product's information by name", "Update product",
