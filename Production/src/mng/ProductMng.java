@@ -12,6 +12,10 @@ import tools.MyTool;
  * @author Administrator
  */
 public class ProductMng {
+    /**
+     * @param args
+     * @throws ParseException
+     */
     public static void main(String[] args) throws ParseException {
         String[] options = {"Print all product", "Create new product", "Check exist product", 
                             "Search product's information by name", "Update product",
@@ -45,7 +49,7 @@ public class ProductMng {
                     pList.writeProductToFile();
                     break;
                 case 8:
-                    pList.printAllProductInFile();
+                   // pList.printAllProductInFile();
                     break;
                 default:
                     if (pList.isChanged()) {

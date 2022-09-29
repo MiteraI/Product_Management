@@ -223,7 +223,7 @@ public class ProductList extends ArrayList<Product> {
     }
 
     public void addProduct() {
-        int choice = MyTool.readRangeInt("Add: [1] Laptop; [2] Phone; [3] WorkStation; [4] Misc", 1, 4);
+        int choice = MyTool.readRangeInt("Add: [1] Laptop; [2] Phone; [3] WorkStation; [4] Misc", 0, 5);
         switch (choice) {
             case 1 -> printLaptop(addLaptop());
             case 2 -> printPhone(addPhone());
@@ -411,7 +411,7 @@ public class ProductList extends ArrayList<Product> {
     }
 
     public void printAllProducts()
-    {
+    {   
         Collections.sort(this);
         printProductList(this);
     }
