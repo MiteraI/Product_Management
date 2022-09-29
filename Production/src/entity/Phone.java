@@ -3,7 +3,7 @@ package entity;
 public class Phone extends Product
 {
     public static String ID_FORMAT = "P\\d{3}";
-    public static String FORMAT_STRING = "|%-5s|%-30s|%-15s|%-10s|%-5s|%-15s|%-10s|%-14s|\n";
+    public static String FORMAT_STRING = "|%-5s|%-30s|%-15s|%-10s|%-5s|%-15s|%-10s|%-15s|\n";
     private String os;
     private int storage;
     private int ramSize;

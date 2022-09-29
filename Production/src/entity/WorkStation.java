@@ -3,7 +3,7 @@ package entity;
 public class WorkStation extends Product
 {
     public static String ID_FORMAT = "WS\\d{3}";
-    public static String FORMAT_STRING = "|%-5s|%-30s|%-15s|%-15s|%-5s|%-15s|%-10s|%-14s|\n";
+    public static String FORMAT_STRING = "|%-5s|%-30s|%-15s|%-15s|%-5s|%-15s|%-10s|%-15s|\n";
     private String cpu;
     private String gpu;
     private int ramSize;

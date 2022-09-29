@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package data;
+
+import entity.*;
 import java.text.ParseException;
 import java.util.List;
 import java.util.ArrayList;
@@ -14,47 +16,147 @@ import tools.MyTool;
  * @author Administrator
  */
 public class ProductList extends ArrayList<Product> {
-    Product pobj = null;
     private String datafile="";
     boolean changed = false;
 
-    public ProductList(Product pobj) {
-        this.pobj = pobj;
-    }
-    public ProductList() {
-    }
-    private void loadProductFromFile() throws ParseException{
+    public ProductList() {}
+
+    private void loadProductFromFile()
+    {
         List<String> list = MyTool.readLinesFromFile(datafile);
-        for(String s: list){
-            Product p = new Product(s);
-            this.add(p);
+        for(String str: list)
+        {
+            String[] parts = str.split("" + Product.SEPARATOR);
+            String productID = parts[0];
+            String name = parts[1];
+            double price = Double.parseDouble(parts[2]);
+            int quantity = Integer.parseInt(parts[3]);
+            boolean status = MyTool.parseBool(parts[4]);
+            if (productID.matches(Laptop.ID_FORMAT))
+            {
+                String cpu = parts[5];
+                String gpu = parts[6];
+                int ramSize = Integer.parseInt(parts[7]);
+                this.add(new Laptop(productID, name, price, quantity, status, cpu, gpu, ramSize));
+            }
+            else if (productID.matches(Phone.ID_FORMAT))
+            {
+                String os = parts[5];
+                int storage = Integer.parseInt(parts[6]);
+                int ramSize = Integer.parseInt(parts[7]);
+                this.add(new Phone(productID, name, price, quantity, status, os, storage, ramSize));
+            }
+            else if (productID.matches(WorkStation.ID_FORMAT))
+            {
+                String cpu = parts[5];
+                String gpu = parts[6];
+                int ramSize = Integer.parseInt(parts[7]);
+                this.add(new WorkStation(productID, name, price, quantity, status, cpu, gpu, ramSize));
+            }
         }
     }
-    public void initWithFile() throws ParseException{
+
+    public void initWithFile()
+    {
         Config cR = new Config();
         datafile = cR.getProductFile();
         loadProductFromFile();   
     }
-    public void checkExistProduct() throws ParseException {
-        boolean check = false;
-        List<String> lines = MyTool.readLinesFromFile(datafile);
+
+    private ArrayList<Product> searchByID(String productID)
+    {
         ArrayList<Product> list = new ArrayList<>();
-        for (String s : lines) {
-            Product p = new Product(s);
-            list.add(p);
+        for (Product p : this)
+        {
+            if (p.getProductID().toUpperCase().contains(productID.toUpperCase()))
+                list.add(p);
         }
-        String find = MyTool.readPattern("Enter product name", Product.PRODUCT_FORMAT);
-        for (Product p : list) {
-            if (p.getName().toLowerCase().contains(find.toLowerCase())) {
-                check = true;
+        return list;
+    }
+
+    private ArrayList<Product> searchByName(String name)
+    {
+        ArrayList<Product> list = new ArrayList<>();
+        for (Product p : this)
+        {
+            if (p.getName().toUpperCase().contains(name.toUpperCase()))
+                list.add(p);
+        }
+        return list;
+    }
+
+    private void printProductList(ArrayList<Product> list)
+    {
+        if (list.isEmpty())
+        {
+            System.out.println("Empty list!");
+            return;
+        }
+        String hrBreak = String.format(Product.FORMAT_STRING, "", "", "", "", "").replace("|", "+").replace(" ", "-");
+        System.out.println(hrBreak);
+        System.out.printf(Product.FORMAT_STRING, "ID", "Name", "Price", "Quantity", "Status");
+        System.out.println(hrBreak);
+        for (Product p : list)
+            System.out.println(p.toFormatString());
+        System.out.println(hrBreak);
+    }
+
+    private void printLaptopList(ArrayList<Laptop> list)
+    {
+        if (list.isEmpty())
+        {
+            System.out.println("Empty list!");
+            return;
+        }
+        String hrBreak = String.format(Laptop.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
+        System.out.println(hrBreak);
+        System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
+        System.out.println(hrBreak);
+        for (Product p : list)
+            System.out.println(p.toFormatString());
+        System.out.println(hrBreak);
+    }
+
+    private void printPhoneList(ArrayList<Phone> list)
+    {
+        if (list.isEmpty())
+        {
+            System.out.println("Empty list!");
+            return;
+        }
+        String hrBreak = String.format(Phone.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
+        System.out.println(hrBreak);
+        System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "OS", "Storage", "RAM", "Price", "Quantity", "Status");
+        System.out.println(hrBreak);
+        for (Product p : list)
+            System.out.println(p.toFormatString());
+        System.out.println(hrBreak);
+    }
+
+    public void checkExistProduct()
+    {
+        //loadProductFromFile();
+        int attr = MyTool.readRangeInt("Search by: [1] ID; [2] Name", 1, 2);
+        ArrayList<Product> list = new ArrayList<>();
+        switch (attr)
+        {
+            case 1 ->
+            {
+                String productID = MyTool.readNonBlank("Enter product ID: ");
+                list = searchByID(productID);
+            }
+            case 2 ->
+            {
+                String name = MyTool.readNonBlank("Enter product name: ");
+                list = searchByName(name);
             }
         }
-        if (check == true) {
-            System.out.println("Product found!");
-        } else {
-            System.out.println("Not found!");
-        }
+        if (list.isEmpty())
+            System.out.println("No products found!");
+        else
+            System.out.println("Product(s) found!");
     }
+
     public void searchProduct() {
         String find = MyTool.readPattern("Enter product name", Product.PRODUCT_FORMAT);
         if(!searchProduct(find)){
@@ -73,22 +175,7 @@ public class ProductList extends ArrayList<Product> {
             
         }
     }
-    public boolean searchProduct(String name) {
-        for (Product p : this) {
-            if (p.getName().toLowerCase().contains(name.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean searchName(String name){
-        for(Product p : this) {
-            if (p.getName().toLowerCase().equals(name.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-    }
+    
     public int checkID(String productID){
         for (int i = 0; i < this.size(); i++) {
             if (this.get(i).getProductID().equals(productID)) {
@@ -97,6 +184,7 @@ public class ProductList extends ArrayList<Product> {
         }
         return -1;
     }
+
     public void addProduct(){
         String productID;
         String name;

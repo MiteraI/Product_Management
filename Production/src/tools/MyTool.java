@@ -12,7 +12,6 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.text.ParseException;
 import java.io.IOException;
 /**
  *
@@ -28,11 +27,13 @@ public class MyTool {
         char c = boolStr.trim().toUpperCase().charAt(0);
         return (c == '1' || c == 'Y' || c == 'T');
     }
-    public static double parseDouble(String doubleStr) throws ParseException {
+    public static double parseDouble(String doubleStr)
+    {
         String s = doubleStr.trim();
         return Double.parseDouble(s);
     }
-    public static int parseInt(String intStr) throws ParseException {
+    public static int parseInt(String intStr)
+    {
         String s = intStr.trim();
         return Integer.parseInt(s);
     }
@@ -40,7 +41,7 @@ public class MyTool {
         int input = 0;
         Scanner SC = new Scanner(System.in);
         do {
-            System.out.print(message + ": ");
+            System.out.print(message);
             input = SC.nextInt();
             if(input <= min || input >= max){
                 System.out.println("Invalid input! Please, try again.");
@@ -53,7 +54,7 @@ public class MyTool {
         double input = 0;
         Scanner SC = new Scanner(System.in);
         do {
-            System.out.print(message + ": ");
+            System.out.print(message);
             input = SC.nextDouble();
             if(input <= min || input >= max){
                 System.out.println("Invalid input! Please, try again.");

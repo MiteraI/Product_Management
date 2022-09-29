@@ -11,7 +11,7 @@ package entity;
  */
 public class Product implements Comparable<Product> {
     public static final String NAME_FORMAT = "[a-zA-Z0-9\" \"]{5,100}";
-    public static final String FORMAT_STRING = "|%-5s|%-30s|%-15s|%-10s|%-14s|\n";
+    public static final String FORMAT_STRING = "|%-5s|%-30s|%-15s|%-10s|%-15s|\n";
     public static final char SEPARATOR = ',';
     private String productID;
     private String name;
