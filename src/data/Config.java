@@ -11,7 +11,7 @@ import tools.MyTool;
  * @author Administrator
  */
 public class Config {
-    private static final String CONFIG_FILE = "Production/Product/Config.txt";
+    private static final String CONFIG_FILE = "Product/Config.txt";
     private String productFile;
     public Config() {
         readData();
@@ -22,7 +22,7 @@ public class Config {
             line = line.toUpperCase();
             String[] parts = line.split(":");
             if(line.indexOf("PRODUCT")>=0){
-                productFile = "Production/Product/" + parts[1].trim();
+                productFile = "Product/" + parts[1].trim();
             }
         }
     }
