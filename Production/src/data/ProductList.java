@@ -21,6 +21,9 @@ public class ProductList extends ArrayList<Product> {
     private final String laptopHrBreak = String.format(Laptop.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
     private final String phoneHrBreak = String.format(Phone.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
     private final String wsHrBreak = String.format(WorkStation.FORMAT_STRING, "", "", "", "", "", "", "", "").replace("|", "+").replace(" ", "-");
+    private final String regexBlank = "^$";
+    private final String regexDecimal = "\\d{0,4}\\.\\d+";
+    private final String regexInteger = "\\d{1,3}";
     private boolean changed = false;
 
     public ProductList() {}
@@ -89,6 +92,15 @@ public class ProductList extends ArrayList<Product> {
         return list;
     }
 
+    private void printProduct(Product p)
+    {
+        System.out.println(productHrBreak);
+        System.out.printf(Product.FORMAT_STRING, "ID", "Name", "Price", "Quantity", "Status");
+        System.out.println(productHrBreak);
+        System.out.println(p.toFormatString());
+        System.out.println(productHrBreak);
+    }
+
     private void printProductList(ArrayList<Product> list)
     {
         if (list.isEmpty())
@@ -104,6 +116,15 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(productHrBreak);
     }
 
+    private void printLaptop(Laptop laptop)
+    {
+        System.out.println(laptopHrBreak);
+        System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
+        System.out.println(laptopHrBreak);
+        System.out.println(laptop.toFormatString());
+        System.out.println(laptopHrBreak);
+    }
+
     private void printLaptopList(ArrayList<Laptop> list)
     {
         if (list.isEmpty())
@@ -115,9 +136,18 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(laptopHrBreak);
         System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
         System.out.println(laptopHrBreak);
-        for (Product p : list)
-            System.out.println(p.toFormatString());
+        for (Laptop laptop : list)
+            System.out.println(laptop.toFormatString());
         System.out.println(laptopHrBreak);
+    }
+
+    private void printPhone(Phone phone)
+    {
+        System.out.println(phoneHrBreak);
+        System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "OS", "Storage", "RAM", "Price", "Quantity", "Status");
+        System.out.println(phoneHrBreak);
+        System.out.println(phone.toFormatString());
+        System.out.println(phoneHrBreak);
     }
 
     private void printPhoneList(ArrayList<Phone> list)
@@ -131,9 +161,18 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(phoneHrBreak);
         System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "OS", "Storage", "RAM", "Price", "Quantity", "Status");
         System.out.println(phoneHrBreak);
-        for (Product p : list)
-            System.out.println(p.toFormatString());
+        for (Phone phone : list)
+            System.out.println(phone.toFormatString());
         System.out.println(phoneHrBreak);
+    }
+
+    private void printWorkStation(WorkStation ws)
+    {
+        System.out.println(wsHrBreak);
+        System.out.printf(WorkStation.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
+        System.out.println(wsHrBreak);
+        System.out.println(ws.toFormatString());
+        System.out.println(wsHrBreak);
     }
 
     private void printWorkStationList(ArrayList<WorkStation> list)
@@ -147,8 +186,8 @@ public class ProductList extends ArrayList<Product> {
         System.out.println(wsHrBreak);
         System.out.printf(WorkStation.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
         System.out.println(wsHrBreak);
-        for (Product p : list)
-            System.out.println(p.toFormatString());
+        for (WorkStation ws : list)
+            System.out.println(ws.toFormatString());
         System.out.println(wsHrBreak);
     }
 
@@ -200,23 +239,173 @@ public class ProductList extends ArrayList<Product> {
         else if (list.size() == 1)
         {
             Product p = list.get(0);
-            if (p instanceof Laptop)
-            {
-
-            }
+            if (p instanceof Laptop laptop)
+                printLaptop(laptop);
+            else if (p instanceof Phone phone)
+                printPhone(phone);
+            else if (p instanceof WorkStation ws)
+                printWorkStation(ws);
+            else
+                printProduct(p);
+        }
+        else
+        {
+            printProductList(list);
         }
     }
-    
-    public int checkID(String productID){
-        for (int i = 0; i < this.size(); i++) {
-            if (this.get(i).getProductID().equals(productID)) {
-                return i;
-            }
+
+    public void addProduct()
+    {
+        int choice = MyTool.readRangeInt("Add: [1] Laptop; [2] Phone; [3] WorkStation; [4] Misc", 1, 4);
+        switch (choice)
+        {
+            case 1 -> printLaptop(addLaptop());
+            case 2 -> printPhone(addPhone());
+            case 3 -> printWorkStation(addWorkStation());
+            case 4 -> printProduct(addMisc());
         }
-        return -1;
+        System.out.println("Product has been added.");
+        changed = true;
     }
 
-    public void addProduct(){
+    private Laptop addLaptop()
+    {
+        String productID = MyTool.readPattern("New laptop's ID: ", Laptop.ID_FORMAT);
+        while (!searchByID(productID).isEmpty())
+        {
+            System.out.println("ID is duplicated!");
+            productID = MyTool.readPattern("New laptop's ID: ", Laptop.ID_FORMAT);
+        }
+        String name = MyTool.readPattern("New laptop's name: ", Laptop.NAME_FORMAT);
+        String cpu = MyTool.readNonBlank("New laptop's CPU: ");
+        String gpu = MyTool.readNonBlank("New laptop's GPU: ");
+        int ramSize = MyTool.readRangeInt("New laptop's RAM size: ", 0, 32);
+        double price = MyTool.readRangeDouble("New laptop's price: ", 0, 10000);
+        int quantity = MyTool.readRangeInt("New laptop's quantity: ", 0, 1000);
+        boolean status = MyTool.readBool("Is the laptop available?");
+        return new Laptop(productID, name, price, quantity, status, cpu, gpu, ramSize);
+    }
+
+    private Phone addPhone()
+    {
+
+    }
+
+    private WorkStation addWorkStation()
+    {
+
+    }
+
+    private Product addMisc()
+    {
+
+    }
+
+    public void updateProduct(String productID)
+    {
+        ArrayList<Product> list = searchByID(productID);
+        if (list.isEmpty())
+        {
+            System.out.println("No products found!");
+            return;
+        }
+        Product p = list.get(0);
+        if (p instanceof Laptop laptop)
+        {
+            updateLaptop(laptop);
+            printLaptop(laptop);
+        }
+        else if (p instanceof Phone phone)
+        {
+            updatePhone(phone);
+            printPhone(phone);
+        }
+        else if (p instanceof WorkStation ws)
+        {
+            updateWorkStation(ws);
+            printWorkStation(ws);
+        }
+        else
+        {
+            updateProduct(p);
+            printProduct(p);
+        }
+        System.out.println("Product has been updated.");
+        changed = true;
+    }
+
+    private void updateLaptop(Laptop laptop)
+    {
+        updateProduct(laptop);
+
+        String tmp = MyTool.readPattern("New CPU (leave blank to skip): ", ".*");
+        if (!tmp.isBlank())
+            laptop.setCpu(tmp);
+        
+        tmp = MyTool.readPattern("New GPU (leave blank to skip): ", ".*");
+        if (!tmp.isBlank())
+            laptop.setGpu(tmp);
+
+        tmp = MyTool.readPattern("New RAM size (leave blank to skip): ", regexBlank + "|" + regexInteger);
+        if (!tmp.isBlank())
+            laptop.setRamSize(Integer.parseInt(tmp));
+    }
+
+    private void updatePhone(Phone phone)
+    {
+        updateProduct(phone);
+
+        String tmp = MyTool.readPattern("New OS (leave blank to skip): ", ".*");
+        if (!tmp.isBlank())
+            phone.setOs(tmp);
+        
+        tmp = MyTool.readPattern("New storage (leave blank to skip): ", regexBlank + "|" + regexInteger);
+        if (!tmp.isBlank())
+            phone.setStorage(Integer.parseInt(tmp));
+
+        tmp = MyTool.readPattern("New RAM size (leave blank to skip): ", regexBlank + "|" + regexInteger);
+        if (!tmp.isBlank())
+            phone.setRamSize(Integer.parseInt(tmp));
+    }
+
+    private void updateWorkStation(WorkStation ws)
+    {
+        updateProduct(ws);
+
+        String tmp = MyTool.readPattern("New CPU (leave blank to skip): ", ".*");
+        if (!tmp.isBlank())
+            ws.setCpu(tmp);
+        
+        tmp = MyTool.readPattern("New GPU (leave blank to skip): ", ".*");
+        if (!tmp.isBlank())
+            ws.setGpu(tmp);
+
+        tmp = MyTool.readPattern("New RAM size (leave blank to skip): ", regexBlank + "|" + regexInteger);
+        if (!tmp.isBlank())
+            ws.setRamSize(Integer.parseInt(tmp));
+    }
+
+    private void updateProduct(Product p)
+    {
+        String tmp = MyTool.readPattern("New name (leave blank to skip): ", regexBlank + "|" + Product.NAME_FORMAT);
+        if (tmp.isBlank())
+            p.setName(tmp);
+
+        tmp = MyTool.readPattern("New price (leave blank to skip): ", regexBlank + "|" + regexDecimal + "|" + regexInteger);
+        if (!tmp.isBlank())
+            p.setPrice(Double.parseDouble(tmp));
+        
+        tmp = MyTool.readPattern("New quantity (leave blank to skip): ", regexBlank + "|" + regexInteger);
+        if (!tmp.isBlank())
+            p.setQuantity(Integer.parseInt(tmp));
+        
+        tmp = MyTool.readPattern("New status (leave blank to skip): ", ".*");
+        if (!tmp.isBlank())
+            p.setStatus(MyTool.parseBool(tmp));
+    }
+
+    /*public void addProduct()
+    {
         String productID;
         String name;
         double price;
@@ -250,7 +439,8 @@ public class ProductList extends ArrayList<Product> {
         System.out.format("|%-5s|%-30s|%-15.2f|%-10d|%-14s|\n",productID,name,price,quantity,status);
         System.out.println("+-----+------------------------------+---------------+----------+--------------+");
         changed = true;
-    }
+    }*/
+
     public void deleteProduct() {
         int pos;
         do{

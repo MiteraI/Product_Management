@@ -19,11 +19,13 @@ import java.io.IOException;
  */
 
 public class MyTool {
-    public static boolean validStr(String str, String regEx) {
+    public static boolean validStr(String str, String regEx)
+    {
         return str.matches(regEx);
     }
 
-    public static boolean parseBool(String boolStr) {
+    public static boolean parseBool(String boolStr)
+    {
         char c = boolStr.trim().toUpperCase().charAt(0);
         return (c == '1' || c == 'Y' || c == 'T');
     }
@@ -42,7 +44,7 @@ public class MyTool {
         Scanner SC = new Scanner(System.in);
         do {
             System.out.print(message);
-            input = SC.nextInt();
+            input = Integer.parseInt(SC.nextLine().trim());
             if(input <= min || input >= max){
                 System.out.println("Invalid input! Please, try again.");
             }
@@ -55,7 +57,7 @@ public class MyTool {
         Scanner SC = new Scanner(System.in);
         do {
             System.out.print(message);
-            input = SC.nextDouble();
+            input = Double.parseDouble(SC.nextLine().trim());
             if(input <= min || input >= max){
                 System.out.println("Invalid input! Please, try again.");
             }
