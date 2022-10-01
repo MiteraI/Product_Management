@@ -50,10 +50,9 @@ public class Phone extends Product
             Product.SEPARATOR + ramSize;
     }
 
-    @Override
-    public String toFormatString()
+    public String toPhoneString()
     {
         return String.format(FORMAT_STRING, super.getProductID(), super.getName(), os, storage + "GB", ramSize + "GB", 
-            super.getPrice(), super.getQuantity(), super.getStatus());
+            super.getPrice(), super.getQuantity(), super.getStatus() ? "Available" : "Not available");
     }
 }

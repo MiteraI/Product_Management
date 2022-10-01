@@ -50,10 +50,9 @@ public class WorkStation extends Product
             Product.SEPARATOR + ramSize;
     }
 
-    @Override
-    public String toFormatString()
+    public String toWorkStationString()
     {
         return String.format(FORMAT_STRING, super.getProductID(), super.getName(), cpu, gpu, ramSize + "GB", 
-            super.getPrice(), super.getQuantity(), super.getStatus());
+            super.getPrice(), super.getQuantity(), super.getStatus() ? "Available" : "Not available");
     }
 }

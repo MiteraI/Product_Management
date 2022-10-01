@@ -86,11 +86,11 @@ public class ProductList extends ArrayList<Product> {
     }
 
     private void printProduct(Product p) {
-        System.out.println(productHrBreak);
+        System.out.print(productHrBreak);
         System.out.printf(Product.FORMAT_STRING, "ID", "Name", "Price", "Quantity", "Status");
-        System.out.println(productHrBreak);
-        System.out.println(p.toFormatString());
-        System.out.println(productHrBreak);
+        System.out.print(productHrBreak);
+        System.out.print(p.toProductString());
+        System.out.print(productHrBreak);
     }
 
     private void printProductList(ArrayList<Product> list) {
@@ -98,20 +98,20 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("Empty list!");
             return;
         }
-        System.out.println(productHrBreak);
+        System.out.print(productHrBreak);
         System.out.printf(Product.FORMAT_STRING, "ID", "Name", "Price", "Quantity", "Status");
-        System.out.println(productHrBreak);
+        System.out.print(productHrBreak);
         for (Product p : list)
-            System.out.println(p.toFormatString());
-        System.out.println(productHrBreak);
+            System.out.print(p.toProductString());
+        System.out.print(productHrBreak);
     }
 
     private void printLaptop(Laptop laptop) {
-        System.out.println(laptopHrBreak);
+        System.out.print(laptopHrBreak);
         System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
-        System.out.println(laptopHrBreak);
-        System.out.println(laptop.toFormatString());
-        System.out.println(laptopHrBreak);
+        System.out.print(laptopHrBreak);
+        System.out.print(laptop.toLaptopString());
+        System.out.print(laptopHrBreak);
     }
 
     private void printLaptopList(ArrayList<Laptop> list) {
@@ -120,20 +120,20 @@ public class ProductList extends ArrayList<Product> {
             return;
         }
 
-        System.out.println(laptopHrBreak);
+        System.out.print(laptopHrBreak);
         System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
-        System.out.println(laptopHrBreak);
+        System.out.print(laptopHrBreak);
         for (Laptop laptop : list)
-            System.out.println(laptop.toFormatString());
-        System.out.println(laptopHrBreak);
+            System.out.print(laptop.toLaptopString());
+        System.out.print(laptopHrBreak);
     }
 
     private void printPhone(Phone phone) {
-        System.out.println(phoneHrBreak);
-        System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "OS", "Storage", "RAM", "Price", "Quantity", "Status");
-        System.out.println(phoneHrBreak);
-        System.out.println(phone.toFormatString());
-        System.out.println(phoneHrBreak);
+        System.out.print(phoneHrBreak);
+        System.out.printf(Phone.FORMAT_STRING, "ID", "Name", "OS", "Storage", "RAM", "Price", "Quantity", "Status");
+        System.out.print(phoneHrBreak);
+        System.out.print(phone.toPhoneString());
+        System.out.print(phoneHrBreak);
     }
 
     private void printPhoneList(ArrayList<Phone> list) {
@@ -142,20 +142,20 @@ public class ProductList extends ArrayList<Product> {
             return;
         }
 
-        System.out.println(phoneHrBreak);
-        System.out.printf(Laptop.FORMAT_STRING, "ID", "Name", "OS", "Storage", "RAM", "Price", "Quantity", "Status");
-        System.out.println(phoneHrBreak);
+        System.out.print(phoneHrBreak);
+        System.out.printf(Phone.FORMAT_STRING, "ID", "Name", "OS", "Storage", "RAM", "Price", "Quantity", "Status");
+        System.out.print(phoneHrBreak);
         for (Phone phone : list)
-            System.out.println(phone.toFormatString());
-        System.out.println(phoneHrBreak);
+            System.out.print(phone.toPhoneString());
+        System.out.print(phoneHrBreak);
     }
 
     private void printWorkStation(WorkStation ws) {
-        System.out.println(wsHrBreak);
+        System.out.print(wsHrBreak);
         System.out.printf(WorkStation.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
-        System.out.println(wsHrBreak);
-        System.out.println(ws.toFormatString());
-        System.out.println(wsHrBreak);
+        System.out.print(wsHrBreak);
+        System.out.print(ws.toWorkStationString());
+        System.out.print(wsHrBreak);
     }
 
     private void printWorkStationList(ArrayList<WorkStation> list) {
@@ -164,17 +164,17 @@ public class ProductList extends ArrayList<Product> {
             return;
         }
 
-        System.out.println(wsHrBreak);
+        System.out.print(wsHrBreak);
         System.out.printf(WorkStation.FORMAT_STRING, "ID", "Name", "CPU", "GPU", "RAM", "Price", "Quantity", "Status");
-        System.out.println(wsHrBreak);
+        System.out.print(wsHrBreak);
         for (WorkStation ws : list)
-            System.out.println(ws.toFormatString());
-        System.out.println(wsHrBreak);
+            System.out.print(ws.toWorkStationString());
+        System.out.print(wsHrBreak);
     }
 
     public void checkExistProduct() {
         // loadProductFromFile();
-        int attr = MyTool.readRangeInt("Search by: [1] ID; [2] Name", 1, 2);
+        int attr = MyTool.readRangeInt("Search by: [1] ID; [2] Name: ", 1, 2);
         ArrayList<Product> list = new ArrayList<>();
         switch (attr) {
             case 1 -> {
@@ -193,7 +193,7 @@ public class ProductList extends ArrayList<Product> {
     }
 
     public void searchProduct() {
-        int attr = MyTool.readRangeInt("Search by: [1] ID; [2] Name", 1, 2);
+        int attr = MyTool.readRangeInt("Search by: [1] ID; [2] Name: ", 1, 2);
         ArrayList<Product> list = new ArrayList<>();
         switch (attr) {
             case 1 -> {
@@ -223,7 +223,7 @@ public class ProductList extends ArrayList<Product> {
     }
 
     public void addProduct() {
-        int choice = MyTool.readRangeInt("Add: [1] Laptop; [2] Phone; [3] WorkStation; [4] Misc", 0, 5);
+        int choice = MyTool.readRangeInt("Add: [1] Laptop; [2] Phone; [3] WorkStation; [4] Misc: ", 0, 5);
         switch (choice) {
             case 1 -> printLaptop(addLaptop());
             case 2 -> printPhone(addPhone());
@@ -247,7 +247,9 @@ public class ProductList extends ArrayList<Product> {
         double price = MyTool.readRangeDouble("New laptop's price: ", 0, 10000);
         int quantity = MyTool.readRangeInt("New laptop's quantity: ", 0, 1000);
         boolean status = MyTool.readBool("Is the laptop available?");
-        return new Laptop(productID, name, price, quantity, status, cpu, gpu, ramSize);
+        Laptop laptop = new Laptop(productID, name, price, quantity, status, cpu, gpu, ramSize);
+        this.add(laptop);
+        return laptop;
     }
 
     private Phone addPhone() {
@@ -263,7 +265,9 @@ public class ProductList extends ArrayList<Product> {
         double price = MyTool.readRangeDouble("New phone's price: ", 0, 10000);
         int quantity = MyTool.readRangeInt("New phone's quantity: ", 0, 1000);
         boolean status = MyTool.readBool("Is the phone available?");
-        return new Phone(productID, name, price, quantity, status, os, storage, ramSize);
+        Phone phone = new Phone(productID, name, price, quantity, status, os, storage, ramSize);
+        this.add(phone);
+        return phone;
     }
 
     private WorkStation addWorkStation() {
@@ -279,7 +283,9 @@ public class ProductList extends ArrayList<Product> {
         double price = MyTool.readRangeDouble("New workstation's price: ", 0, 10000);
         int quantity = MyTool.readRangeInt("New workstation's quantity: ", 0, 1000);
         boolean status = MyTool.readBool("Is the workstation available?");
-        return new WorkStation(productID, name, price, quantity, status, cpu, gpu, ramSize);
+        WorkStation ws = new WorkStation(productID, name, price, quantity, status, cpu, gpu, ramSize);
+        this.add(ws);
+        return ws;
     }
 
     private Product addMisc() {
@@ -292,7 +298,9 @@ public class ProductList extends ArrayList<Product> {
         double price = MyTool.readRangeDouble("New product's price: ", 0, 10000);
         int quantity = MyTool.readRangeInt("New product's quantity: ", 0, 1000);
         boolean status = MyTool.readBool("Is the product available?");
-        return new Product(productID, name, price, quantity, status);
+        Product p = new Product(productID, name, price, quantity, status);
+        this.add(p);
+        return p;
     }
 
     public void updateProduct() {

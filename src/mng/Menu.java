@@ -5,7 +5,6 @@
  */
 package mng;
 import java.util.ArrayList;
-
 import tools.MyTool;
 /**
  *

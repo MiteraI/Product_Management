@@ -79,7 +79,7 @@ public class Product implements Comparable<Product> {
             SEPARATOR + status;
     }
 
-    public String toFormatString()
+    public String toProductString()
     {
         return String.format(Product.FORMAT_STRING, productID, name, price, quantity, status ? "Available" : "Not available");
     }
