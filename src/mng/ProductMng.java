@@ -23,39 +23,26 @@ public class ProductMng {
         do {
             choice = mnu.getChoice("--------Product Manager--------");
             switch (choice) {
-                case 1:
-                    pList.printAllProducts();
-                    break;
-                case 2:
-                    pList.addProduct();
-                    break;
-                case 3:
-                    pList.checkExistProduct();
-                    break;
-                case 4:
-                    pList.searchProduct();
-                    break;
-                case 5:
-                    pList.updateProduct();
-                    break;
-                case 6:
-                    pList.deleteProduct();
-                    break;
-                case 7:
-                    pList.writeProductToFile();
-                    break;
-                case 8:
-                   // pList.printAllProductInFile();
-                    break;
-                default:
-                    if (pList.isChanged()) {
-                        boolean res = MyTool.readBool("Data changed. Write to file? ");
-                        if (res == true) {
-                            pList.writeProductToFile();
-                        }
-                    }
+                case 1 -> pList.printAllProducts();
+                case 2 -> pList.addProduct();
+                case 3 -> pList.checkExistProduct();
+                case 4 -> pList.searchProduct();
+                case 5 -> pList.updateProduct();
+                case 6 -> pList.deleteProduct();
+                case 7 -> pList.writeProductToFile();
+                case 8 -> {
+                }
+                default -> {
+                        if (pList.isChanged()) {
+                                boolean res = MyTool.readBool("Data changed. Write to file? ");
+                                if (res == true) {
+                                        pList.writeProductToFile();
+                                        }
+                                }
+                }
             }
-        } while (choice > 0 && choice <= mnu.size());
+            // pList.printAllProductInFile();
+                    } while (choice > 0 && choice <= mnu.size());
         System.out.println("Good Bye!");
     }
 }
