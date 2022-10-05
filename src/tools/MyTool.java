@@ -50,14 +50,13 @@ public class MyTool {
                 input = Integer.parseInt(SC.nextLine().trim());
                 if(input < min || input > max)
                 {
-                System.out.println("Input is out of range! Please try again.");
+                    System.out.println("Input is out of range! Please try again.");
                 }
             }
             catch (NumberFormatException nfe)
             {
                 System.out.println("Input format is not an integer! Please try again");
             }
-            
         } while (input < min || input > max);
         return input;
     }
@@ -70,7 +69,7 @@ public class MyTool {
                 input = Double.parseDouble(SC.nextLine().trim());
                 if(input < min || input > max)
                 {
-                System.out.println("Input out of range! Please try again.");
+                    System.out.println("Input out of range! Please try again.");
                 }
             }
             catch (NumberFormatException nfe)
