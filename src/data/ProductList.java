@@ -32,6 +32,7 @@ public class ProductList extends ArrayList<Product> {
     List<String> phoneName = MyTool.readLinesFromFile("Product\\Phone_Name");
     List<String> laptopName = MyTool.readLinesFromFile("Prodcut\\Laptop_Name");
     List<String> wsName  = MyTool.readLinesFromFile("Product\\WS_Name");
+
     public ProductList() {
     }
 
