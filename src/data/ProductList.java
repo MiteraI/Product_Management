@@ -29,7 +29,9 @@ public class ProductList extends ArrayList<Product> {
     private final String regexDecimal = "\\d{0,4}\\.\\d+";
     private final String regexInteger = "\\d{1,3}";
     private boolean changed = false;
-
+    List<String> phoneName = MyTool.readLinesFromFile("Product\\Phone_Name");
+    List<String> laptopName = MyTool.readLinesFromFile("Prodcut\\Laptop_Name");
+    List<String> wsName  = MyTool.readLinesFromFile("Product\\WS_Name");
     public ProductList() {
     }
 
