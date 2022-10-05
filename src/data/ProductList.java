@@ -379,7 +379,7 @@ public class ProductList extends ArrayList<Product> {
 
     private void updateProduct(Product p) {
         String tmp = MyTool.readPattern("New name (leave blank to skip): ", regexBlank + "|" + Product.NAME_FORMAT);
-        if (tmp.isBlank())
+        if (!tmp.isBlank())
             p.setName(tmp);
 
         tmp = MyTool.readPattern("New price (leave blank to skip): ",

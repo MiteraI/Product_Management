@@ -42,25 +42,41 @@ public class MyTool {
         return Integer.parseInt(s);
     }
     public static int readRangeInt(String message, int min, int max) {
-        int input = 0;
+        int input = Integer.MAX_VALUE;
         do {
             System.out.print(message);
-            input = Integer.parseInt(SC.nextLine().trim());
-            if(input <= min || input >= max){
-                System.out.println("Invalid input! Please, try again.");
+            try
+            {
+                input = Integer.parseInt(SC.nextLine().trim());
             }
-        } while (input <= min || input >= max);
+            catch (NumberFormatException nfe)
+            {
+                System.out.println("Input format is not an integer! Please try again");
+            }
+            if(input < min || input > max)
+            {
+                System.out.println("Input is out of range! Please try again.");
+            }
+        } while (input < min || input > max);
         return input;
     }
     public static double readRangeDouble(String message, double min, double max) {
-        double input = 0;
+        double input = Double.MAX_VALUE;
         do {
             System.out.print(message);
-            input = Double.parseDouble(SC.nextLine().trim());
-            if(input <= min || input >= max){
-                System.out.println("Invalid input! Please, try again.");
+            try
+            {
+                input = Double.parseDouble(SC.nextLine().trim());
             }
-        } while (input <= min || input >= max);
+            catch (NumberFormatException nfe)
+            {
+                System.out.println("Input format is not a decimal number! Please try again");
+            }
+            if(input < min || input > max)
+            {
+                System.out.println("Input out of range! Please try again.");
+            }
+        } while (input < min || input > max);
         return input;
     }
     public static String readNonBlank(String message) {
@@ -69,7 +85,7 @@ public class MyTool {
             System.out.print(message);
             input = SC.nextLine().trim();
             if(input.isEmpty()){
-                System.out.println("Invalid input! Please, try again.");
+                System.out.println("Invalid input! Please try again.");
             }
         } while (input.isEmpty());
         return input;
@@ -82,7 +98,7 @@ public class MyTool {
             input = SC.nextLine().trim();
             valid = validStr(input, pattern);
             if(!valid){
-                System.out.println("Invalid input! Please, try again.");
+                System.out.println("Invalid input! Please try again.");
             }
         } while (!valid);
         return input;
@@ -138,7 +154,7 @@ public class MyTool {
             input = SC.nextLine().trim();
             valid = (input.equalsIgnoreCase("available") || input.equalsIgnoreCase("not available"));
             if(!valid){
-                System.out.println("Invalid input! Please, try again.");
+                System.out.println("Invalid input! Please try again.");
             }
         } while (!valid);
         return input;
