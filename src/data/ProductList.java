@@ -29,6 +29,12 @@ public class ProductList extends ArrayList<Product> {
     private final String regexDecimal = "\\d{0,4}\\.\\d+";
     private final String regexInteger = "\\d{1,3}";
     private boolean changed = false;
+<<<<<<< Updated upstream
+=======
+    public List<String> phoneName = MyTool.readLinesFromFile("Product\\Phone_Name.txt");
+    public List<String> laptopName = MyTool.readLinesFromFile("Prodcut\\Laptop_Name.txt");
+    public List<String> wsName  = MyTool.readLinesFromFile("Product\\WS_Name.txt");
+>>>>>>> Stashed changes
 
     public ProductList() {
     }
@@ -474,5 +480,29 @@ public class ProductList extends ArrayList<Product> {
 
     public void setChanged(boolean changed) {
         this.changed = changed;
+    }
+    public void setPhoneName() {
+        String phone;
+        String[] part;
+        boolean check = true;
+        while(check) {
+            for(String name: phoneName) {
+                phone = MyTool.SC.nextLine();
+                part = phone.split(" ");
+                if (phone.equalsIgnoreCase(name)) {
+
+                }
+            }
+        }
+    }
+    public static void main(String[] args) {
+        ProductList pl = new ProductList();
+        String test = "Hello I'm from the future";
+        String[] part = test.split(" ");
+        System.out.println(pl.phoneName);
+        for (int i=0; i<part.length;i++){
+        System.out.println(part[i]);
+        }
+
     }
 }
