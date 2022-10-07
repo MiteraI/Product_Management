@@ -29,12 +29,8 @@ public class ProductList extends ArrayList<Product> {
     private final String regexDecimal = "\\d{0,4}\\.\\d+";
     private final String regexInteger = "\\d{1,3}";
     private boolean changed = false;
-<<<<<<< Updated upstream
-=======
-    public List<String> phoneName = MyTool.readLinesFromFile("Product\\Phone_Name.txt");
-    public List<String> laptopName = MyTool.readLinesFromFile("Prodcut\\Laptop_Name.txt");
-    public List<String> wsName  = MyTool.readLinesFromFile("Product\\WS_Name.txt");
->>>>>>> Stashed changes
+    public List<String> Name = MyTool.readLinesFromFile("Product\\Names.txt");
+    
 
     public ProductList() {
     }
@@ -229,7 +225,7 @@ public class ProductList extends ArrayList<Product> {
     }
 
     public void addProduct() {
-        int choice = MyTool.readRangeInt("Add: [1] Laptop; [2] Phone; [3] WorkStation; [4] Misc: ", 0, 5);
+        int choice = MyTool.readRangeInt("Add: [1] Laptop; [2] Phone; [3] WorkStation; [4] Misc: ", 1, 4);
         switch (choice) {
             case 1 -> printLaptop(addLaptop());
             case 2 -> printPhone(addPhone());
@@ -246,7 +242,7 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("ID is duplicated!");
             productID = MyTool.readPattern("New laptop's ID: ", Laptop.ID_FORMAT);
         }
-        String name = MyTool.readPattern("New laptop's name: ", Laptop.NAME_FORMAT);
+        String name = MyTool.readName("New laptop's name: ", Name);
         String cpu = MyTool.readNonBlank("New laptop's CPU: ");
         String gpu = MyTool.readNonBlank("New laptop's GPU: ");
         int ramSize = MyTool.readRangeInt("New laptop's RAM size: ", 0, 32);
@@ -264,7 +260,7 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("ID is duplicated!");
             productID = MyTool.readPattern("New phone's ID: ", Phone.ID_FORMAT);
         }
-        String name = MyTool.readPattern("New phone's name: ", Phone.NAME_FORMAT);
+        String name = MyTool.readName("New phone's name: ", Name);
         String os = MyTool.readNonBlank("New phone's OS: ");
         int storage = MyTool.readRangeInt("New phone's storage: ", 0, 2048);
         int ramSize = MyTool.readRangeInt("New phone's RAM size: ", 0, 8);
@@ -282,7 +278,7 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("ID is duplicated!");
             productID = MyTool.readPattern("New workstation's ID: ", WorkStation.ID_FORMAT);
         }
-        String name = MyTool.readPattern("New workstation's name: ", WorkStation.NAME_FORMAT);
+        String name = MyTool.readName("New workstation's name: ", Name);
         String cpu = MyTool.readNonBlank("New workstation's CPU: ");
         String gpu = MyTool.readNonBlank("New workstation's GPU: ");
         int ramSize = MyTool.readRangeInt("New workstation's RAM size: ", 0, 16384);
@@ -384,8 +380,8 @@ public class ProductList extends ArrayList<Product> {
     }
 
     private void updateProduct(Product p) {
-        String tmp = MyTool.readPattern("New name (leave blank to skip): ", regexBlank + "|" + Product.NAME_FORMAT);
-        if (tmp.isBlank())
+        String tmp = MyTool.readName("New name (leave blank to skip): ", Name);
+        if (!tmp.isBlank())
             p.setName(tmp);
 
         tmp = MyTool.readPattern("New price (leave blank to skip): ",
@@ -481,28 +477,15 @@ public class ProductList extends ArrayList<Product> {
     public void setChanged(boolean changed) {
         this.changed = changed;
     }
-    public void setPhoneName() {
-        String phone;
-        String[] part;
-        boolean check = true;
-        while(check) {
-            for(String name: phoneName) {
-                phone = MyTool.SC.nextLine();
-                part = phone.split(" ");
-                if (phone.equalsIgnoreCase(name)) {
-
-                }
-            }
-        }
-    }
     public static void main(String[] args) {
         ProductList pl = new ProductList();
         String test = "Hello I'm from the future";
         String[] part = test.split(" ");
-        System.out.println(pl.phoneName);
+        System.out.println(pl.Name);
         for (int i=0; i<part.length;i++){
         System.out.println(part[i]);
         }
-
+        System.out.println(MyTool.readName("Testing bruh", pl.Name));
+        
     }
 }

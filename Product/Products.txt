@@ -1,2 +1,3 @@
 L001,Dell Inspiron,1000.0,100,true,Intel Core i7,NVIDIA 350,8
+P002,SamSung Galazy,100.5,10,true,Android,128,4
 P001,Iphone ProMax,100.0,5,true,IOS,128,4

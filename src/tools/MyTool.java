@@ -46,10 +46,10 @@ public class MyTool {
         do {
             System.out.print(message);
             input = Integer.parseInt(SC.nextLine().trim());
-            if(input <= min || input >= max){
+            if(input < min || input > max){
                 System.out.println("Invalid input! Please, try again.");
             }
-        } while (input <= min || input >= max);
+        } while (input < min || input > max);
         return input;
     }
     public static double readRangeDouble(String message, double min, double max) {
@@ -92,6 +92,24 @@ public class MyTool {
         System.out.print(message + "[1/0-Y/N-T/F]: ");
         input = SC.nextLine().trim();
         return MyTool.parseBool(input);
+    }
+    public static String readName(String message, List<String> names) {
+        String input="";
+        String[] part;
+        boolean check = true;
+        while(check) {
+            System.out.println(message);
+            System.out.println("Line of products is: "+names);
+            input = MyTool.readPattern("Input product name: ","^[a-zA-Z0-9_ ]*$");
+            for(String name: names) {
+                part = input.split(" ");
+                if (part[0].equals(name) || part[0].isEmpty()) {
+                    return input;
+                }
+            }
+            System.out.println("Wrong line of product. Try again!");
+        }
+        return input;
     }
     public static List<String> readLinesFromFile(String filename) {
         ArrayList<String> list = new ArrayList<>();
