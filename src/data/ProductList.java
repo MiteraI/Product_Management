@@ -29,8 +29,11 @@ public class ProductList extends ArrayList<Product> {
     private final String regexDecimal = "\\d{0,4}\\.\\d+";
     private final String regexInteger = "\\d{1,3}";
     private boolean changed = false;
-    public List<String> Name = MyTool.readLinesFromFile("Product\\Names.txt");
-    
+    public List<String> phoneName = MyTool.readLinesFromFile("Product\\PhoneNames.txt");
+    public List<String> laptopName = MyTool.readLinesFromFile("Product\\LaptopNames.txt");
+    public List<String> wsName = MyTool.readLinesFromFile("Product\\WSNames.txt");
+    public List<String> miscName = MyTool.readLinesFromFile("Product\\MiscNames.txt");
+
 
     public ProductList() {
     }
@@ -242,7 +245,7 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("ID is duplicated!");
             productID = MyTool.readPattern("New laptop's ID: ", Laptop.ID_FORMAT);
         }
-        String name = MyTool.readName("New laptop's name: ", Name);
+        String name = MyTool.readName("New laptop's name: ", laptopName);
         String cpu = MyTool.readNonBlank("New laptop's CPU: ");
         String gpu = MyTool.readNonBlank("New laptop's GPU: ");
         int ramSize = MyTool.readRangeInt("New laptop's RAM size: ", 0, 32);
@@ -260,7 +263,7 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("ID is duplicated!");
             productID = MyTool.readPattern("New phone's ID: ", Phone.ID_FORMAT);
         }
-        String name = MyTool.readName("New phone's name: ", Name);
+        String name = MyTool.readName("New phone's name: ", phoneName);
         String os = MyTool.readNonBlank("New phone's OS: ");
         int storage = MyTool.readRangeInt("New phone's storage: ", 0, 2048);
         int ramSize = MyTool.readRangeInt("New phone's RAM size: ", 0, 8);
@@ -278,7 +281,7 @@ public class ProductList extends ArrayList<Product> {
             System.out.println("ID is duplicated!");
             productID = MyTool.readPattern("New workstation's ID: ", WorkStation.ID_FORMAT);
         }
-        String name = MyTool.readName("New workstation's name: ", Name);
+        String name = MyTool.readName("New workstation's name: ", wsName);
         String cpu = MyTool.readNonBlank("New workstation's CPU: ");
         String gpu = MyTool.readNonBlank("New workstation's GPU: ");
         int ramSize = MyTool.readRangeInt("New workstation's RAM size: ", 0, 16384);
@@ -324,15 +327,14 @@ public class ProductList extends ArrayList<Product> {
             updateWorkStation(ws);
             printWorkStation(ws);
         } else {
-            updateProduct(p);
+            updateProduct(p, miscName);
             printProduct(p);
         }
         System.out.println("Product has been updated.");
         changed = true;
     }
-
     private void updateLaptop(Laptop laptop) {
-        updateProduct(laptop);
+        updateProduct(laptop,laptopName);
 
         String tmp = MyTool.readPattern("New CPU (leave blank to skip): ", ".*");
         if (!tmp.isBlank())
@@ -348,7 +350,7 @@ public class ProductList extends ArrayList<Product> {
     }
 
     private void updatePhone(Phone phone) {
-        updateProduct(phone);
+        updateProduct(phone,phoneName);
 
         String tmp = MyTool.readPattern("New OS (leave blank to skip): ", ".*");
         if (!tmp.isBlank())
@@ -364,7 +366,7 @@ public class ProductList extends ArrayList<Product> {
     }
 
     private void updateWorkStation(WorkStation ws) {
-        updateProduct(ws);
+        updateProduct(ws,wsName);
 
         String tmp = MyTool.readPattern("New CPU (leave blank to skip): ", ".*");
         if (!tmp.isBlank())
@@ -379,7 +381,7 @@ public class ProductList extends ArrayList<Product> {
             ws.setRamSize(Integer.parseInt(tmp));
     }
 
-    private void updateProduct(Product p) {
+    private void updateProduct(Product p, List<String> Name) {
         String tmp = MyTool.readName("New name (leave blank to skip): ", Name);
         if (!tmp.isBlank())
             p.setName(tmp);
@@ -476,16 +478,5 @@ public class ProductList extends ArrayList<Product> {
 
     public void setChanged(boolean changed) {
         this.changed = changed;
-    }
-    public static void main(String[] args) {
-        ProductList pl = new ProductList();
-        String test = "Hello I'm from the future";
-        String[] part = test.split(" ");
-        System.out.println(pl.Name);
-        for (int i=0; i<part.length;i++){
-        System.out.println(part[i]);
-        }
-        System.out.println(MyTool.readName("Testing bruh", pl.Name));
-        
     }
 }
