@@ -3,24 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package data;
 
 /**
  *
  * @author Administrator
  */
-public class Product implements Comparable<Product> {
-    public static final String ID_FORMAT = "M\\d{3}";
-    public static final String NAME_FORMAT = "[a-zA-Z0-9\" \"]{5,100}";
+public abstract class Product implements Comparable<Product> {
     public static final String FORMAT_STRING = "|%-5s|%-30s|%-15s|%-10s|%-15s|\n";
     public static final char SEPARATOR = ',';
-    private String productID;
-    private String name;
-    private double price;
-    private int quantity;
-    private boolean status;
+    protected String productID;
+    protected String name;
+    protected double price;
+    protected int quantity;
+    protected boolean status;
 
-    public Product() {}
+    public Product() {
+    }
 
     public Product(String productID, String name, double price, int quantity, boolean status) {
         this.productID = productID;
@@ -71,34 +70,32 @@ public class Product implements Comparable<Product> {
     }
 
     @Override
-    public String toString(){
-        return productID + 
-            SEPARATOR + name + 
-            SEPARATOR + price + 
-            SEPARATOR + quantity + 
-            SEPARATOR + status;
+    public String toString() {
+        return productID +
+                SEPARATOR + name +
+                SEPARATOR + price +
+                SEPARATOR + quantity +
+                SEPARATOR + status;
     }
 
-    public String toProductString()
-    {
-        return String.format(Product.FORMAT_STRING, productID, name, price, quantity, status ? "Available" : "Not available");
+    public String toProductString() {
+        return String.format(Product.FORMAT_STRING, productID, name, price, quantity,
+                status ? "Available" : "Not available");
     }
 
     @Override
     public int compareTo(Product p) {
-        if(this.getQuantity()== p.getQuantity()){
-            if (this.getPrice() > p.getPrice())
+        if (this.getQuantity() == p.getQuantity()) {
+            if (this.getPrice() > p.getPrice()) {
                 return -1;
-            else if (this.getPrice() == p.getPrice()){
+            } else if (this.getPrice() == p.getPrice()) {
                 return 0;
-            }
-            else{
+            } else {
                 return 1;
-            }    
-        } else if(this.getQuantity() > p.getQuantity()){
+            }
+        } else if (this.getQuantity() > p.getQuantity()) {
             return -1;
-        }
-        else{
+        } else {
             return 1;
         }
     }

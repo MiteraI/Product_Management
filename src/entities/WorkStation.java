@@ -1,17 +1,19 @@
-package entity;
+package entities;
 
-public class Laptop extends Product
-{
-    public static String ID_FORMAT = "L\\d{3}";
+import data.Product;
+
+public class WorkStation extends Product {
+    public static String ID_FORMAT = "WS\\d{3}";
     public static String FORMAT_STRING = "|%-5s|%-30s|%-15s|%-15s|%-5s|%-15s|%-10s|%-15s|\n";
     private String cpu;
     private String gpu;
     private int ramSize;
 
-    public Laptop() {}
-    
-    public Laptop(String productID, String name, double price, int quantity, boolean status, String cpu, String gpu, int ramSize)
-    {
+    public WorkStation() {
+    }
+
+    public WorkStation(String productID, String name, double price, int quantity, boolean status, String cpu,
+            String gpu, int ramSize) {
         super(productID, name, price, quantity, status);
         this.cpu = cpu;
         this.gpu = gpu;
@@ -44,15 +46,14 @@ public class Laptop extends Product
 
     @Override
     public String toString() {
-        return super.toString() + 
-            Product.SEPARATOR + cpu + 
-            Product.SEPARATOR + gpu + 
-            Product.SEPARATOR + ramSize;
+        return super.toString() +
+                Product.SEPARATOR + cpu +
+                Product.SEPARATOR + gpu +
+                Product.SEPARATOR + ramSize;
     }
 
-    public String toLaptopString()
-    {
-        return String.format(FORMAT_STRING, super.getProductID(), super.getName(), cpu, gpu, ramSize + "GB", 
-            super.getPrice(), super.getQuantity(), super.getStatus() ? "Available" : "Not available");
+    public String toWorkStationString() {
+        return String.format(FORMAT_STRING, productID, name, cpu, gpu, ramSize + "GB", price, quantity,
+                status ? "Available" : "Not available");
     }
 }

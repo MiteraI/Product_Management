@@ -20,6 +20,9 @@ import java.io.IOException;
 
 public class MyTool {
     public static Scanner SC = new Scanner(System.in);
+    public static final String regexBlank = "^$";
+    public static final String regexDecimal = "\\d{0,4}\\.\\d+";
+    public static final String regexInteger = "\\d{1,4}";
     
     public static boolean validStr(String str, String regEx)
     {
