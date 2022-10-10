@@ -1,0 +1,1 @@
+L001,Dell Inspiron,1000.0,1000,true,Intel Core i7,NVIDIA,8

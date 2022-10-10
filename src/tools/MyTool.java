@@ -98,21 +98,15 @@ public class MyTool {
     }
     public static String readName(String message, List<String> names) {
         String input="";
-        String[] part;
-        boolean check = true;
-        while(check) {
-            System.out.println(message);
-            System.out.println("Line of products is: "+names);
-            input = MyTool.readPattern("Input product name: ","^[a-zA-Z0-9_ ]*$");
+        while(true) {
+            System.out.println("Line of products is: "+ names);
+            input = MyTool.readNonBlank(message);
             for(String name: names) {
-                part = input.split(" ");
-                if (part[0].equals(name) || part[0].isEmpty()) {
+                if (input.contains(name))
                     return input;
-                }
             }
             System.out.println("Wrong line of product. Try again!");
         }
-        return input;
     }
     public static List<String> readLinesFromFile(String filename) {
         ArrayList<String> list = new ArrayList<>();

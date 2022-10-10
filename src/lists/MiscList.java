@@ -159,7 +159,7 @@ public class MiscList extends ArrayList<Misc> {
         if (changed) {
             MyTool.writeFile(miscFile, this);
             changed = false;
-            System.out.println("Misc list is successfully saved.");
+            System.out.println("Miscellaneous products list is successfully saved.");
         }
     }
 

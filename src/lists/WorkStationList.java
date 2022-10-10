@@ -56,7 +56,7 @@ public class WorkStationList extends ArrayList<WorkStation> {
         int ramSize = MyTool.readRangeInt("New workstation's RAM size: ", 0, 16384);
         double price = MyTool.readRangeDouble("New workstation's price: ", 0, 10000);
         int quantity = MyTool.readRangeInt("New workstation's quantity: ", 0, 1000);
-        boolean status = MyTool.readBool("Is the ws available?");
+        boolean status = MyTool.readBool("Is the workstation available?");
         WorkStation ws = new WorkStation(productID, name, price, quantity, status, cpu, gpu, ramSize);
         this.add(ws);
         changed = true;
