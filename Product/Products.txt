@@ -1,3 +1,0 @@
-L001,Dell Inspiron,1000.0,100,true,Intel Core i7,NVIDIA 350,8
-WS001,StarLight 13th,4000.0,40,true,Intel 13900KS,RTX 4090Ti,64
-P001,Iphone ProMax,100.0,5,true,IOS,128,4

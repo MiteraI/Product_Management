@@ -1,1 +1,8 @@
-File of product: Products.txt
+File of laptops: Laptops.txt
+File of phones: Phones.txt
+File of workstations: WS.txt
+File of misc products: Misc.txt
+Laptop names: LaptopNames.txt
+Phone names: PhoneNames.txt
+Workstation names: WSNames.txt
+Misc products names: MiscNames.txt
